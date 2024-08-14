@@ -3,7 +3,7 @@ import swal from 'sweetalert';
 
 const barangList = [
     {    
-        id: 1,
+        id: 11,
         name: 'Kopi Kapal Api',
         qty: 10,
         checked: false
@@ -120,10 +120,17 @@ export function ListBelanja({ items, onRemoveItem, onToogleItem, onClearItem }) 
   );
 }
 
-export function Footer() {
+export function Footer( {items} ) {
+
+  const totalitems = items.length;
+  const totalchecked = items.filter((item) => item.checked).length;
+  const percent = Math.floor((totalchecked / totalitems) * 100);
+
   return (
     <footer className="stats">
-      Ada 10 barang di daftar belanjaan, 5 barang sudah dibeli (50%)
+      <p>Sudah dibeli = {percent}%</p>
+      <p>{totalchecked} Barang sudah di check</p>
+      <p>{totalitems - totalchecked} Total barang yang belum dibeli</p>
     </footer>
   );
 }
@@ -169,7 +176,7 @@ export default function App() {
         <Form onAddItem={handleAddItem} />
         <ListBelanja items={items} onRemoveItem={handleRemoveItem} onToogleItem={handleToggleItem} onClearItem={handleClearList} />
       </div>
-      <Footer />
+      <Footer items={items} />
     </div>
   );
 }
